@@ -53,7 +53,7 @@ stages:
 
 - stage: Deploy
   jobs:
-  - deployment: Deploy To Dev
+  - deployment: Deploy
     pool:
       vmImage: 'windows-latest'
     environment: 'test'
