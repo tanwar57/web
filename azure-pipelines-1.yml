@@ -51,7 +51,7 @@ stages:
 
 - stage: Deploy
   jobs:
-  - job: Deploy
+  - deployment: Deploy
     pool:
       vmImage: 'windows-latest'
     environment: 'checking-code'
@@ -65,13 +65,6 @@ stages:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.ArtifactsDirectory)'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_name }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
           
           
 
