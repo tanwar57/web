@@ -34,3 +34,4 @@ C:\Users\ravin\source\repos\mytestapp\mytestapp\obj\Debug\netcoreapp3.1\mytestap
 C:\Users\ravin\source\repos\mytestapp\mytestapp\obj\Debug\netcoreapp3.1\mytestapp.pdb
 C:\Users\ravin\source\repos\mytestapp\mytestapp\obj\Debug\netcoreapp3.1\mytestapp.genruntimeconfig.cache
 C:\Users\ravin\source\repos\mytestapp\mytestapp\obj\Debug\netcoreapp3.1\mytestapp.csproj.CopyComplete
+C:\Users\ravin\source\repos\mytestapp\mytestapp\obj\Debug\netcoreapp3.1\mytestapp.csprojAssemblyReference.cache
