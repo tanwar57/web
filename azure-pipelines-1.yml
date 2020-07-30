@@ -2,15 +2,13 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 parameters:
 - name: app_name
   displayName: WebApp Name
   type: string
   values:
-  - webapptest57
+  - mytestapp57
   - myapptest27
-  - fiftechapp
 
 trigger:
 - master
@@ -56,7 +54,7 @@ stages:
   - deployment: Deploy
     pool:
       vmImage: 'windows-latest'
-    environment: 'test'
+    environment: 'checking-code'
     strategy:
       runOnce:
         deploy:
@@ -67,10 +65,6 @@ stages:
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.ArtifactsDirectory)'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_name }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+          
+          
+
