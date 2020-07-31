@@ -4,14 +4,20 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 parameters:
-- name: app_name
+- name: app_name_for_dev
   displayName: WebApp Name
   type: string
   values:
   - webapptest57
   - myapptest27
   - fiftechapp
-
+- name: app_name_for_prod
+  displayName: WebApp Name
+  type: string
+  values:
+  - webapptest57
+  - myapptest27
+  - fiftechapp
 trigger:
 - master
 stages:
