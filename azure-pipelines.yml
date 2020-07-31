@@ -5,14 +5,14 @@
 
 parameters:
 - name: app_name_for_dev
-  displayName: WebApp Name
+  displayName: WebApp Name For Development Environment
   type: string
   values:
   - webapptest57
   - myapptest27
   - fiftechapp
 - name: app_name_for_prod
-  displayName: WebApp Name
+  displayName: WebApp Name For Test Environment
   type: string
   values:
   - webapptest57
