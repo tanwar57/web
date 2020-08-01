@@ -41,7 +41,8 @@ parameters:
   type: string
   default: current
   values:
-  - asdsa
+  - specific
+  - latest
 
 trigger:
 - master
