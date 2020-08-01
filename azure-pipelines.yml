@@ -44,6 +44,8 @@ parameters:
   - current
   - specific
   - latest
+  - abcd
+  - defgh
 
 trigger:
 - master
