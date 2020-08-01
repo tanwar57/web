@@ -4,8 +4,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 parameters:
-- name: Application in Development
-  displayName: WebApp Name For Development Environment
+- name: app_in_dev
+  displayName: Application in Development Environment
   type: string
   default: 
   values:
@@ -15,8 +15,8 @@ parameters:
   - myapplicatointest7-dev
   - fiftechappreact-dev
 
-- name: Application in Stage
-  displayName: WebApp Name For Test Environment
+- name: apps_in_test
+  displayName: Application in Test Environment
   type: string
   default:
   values:
@@ -26,8 +26,8 @@ parameters:
   - myappteststage27-test
   - fiftechappstage-test
 
-- name: Applications in Production
-  displayName: WebApp Name For Development Environment
+- name: apps_in_prod
+  displayName: Application in Production Environment
   type: string
   default:
   values:
@@ -97,7 +97,7 @@ stages:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
               appType: 'webApp'
-              WebAppName: ${{ parameters.app_name_for_dev }}
+              WebAppName: ${{ parameters.app_in_dev }}
               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
 
 - stage: Staging_Environment
@@ -122,7 +122,7 @@ stages:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
               appType: 'webApp'
-              WebAppName: ${{ parameters.app_name_for_test }}
+              WebAppName: ${{ parameters.apps_in_test }}
               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
             
 - stage: Production_Environment
@@ -147,5 +147,5 @@ stages:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
               appType: 'webApp'
-              WebAppName: ${{ parameters.app_name_for_test }}
+              WebAppName: ${{ parameters.apps_in_prod }}
               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
