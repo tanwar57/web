@@ -57,7 +57,7 @@ stages:
         publishLocation: 'Container'
     
 - stage: Deploy_to_Dev
-  dependsOn: []
+  dependsOn: Build
   jobs:
   - deployment: Deploy_to_Dev
     pool:
@@ -82,7 +82,7 @@ stages:
               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
 
 - stage: Deploy_to_Test
-  dependsOn: []
+  dependsOn: Build
   jobs:
   - deployment: Deploy
     pool:
