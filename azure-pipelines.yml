@@ -36,6 +36,12 @@ parameters:
   - fiftechapp-prod
   - myapptestprod27-prod
   - fiftechappproduction-prod
+- name: build_choose
+  displayName: Choose Specific build
+  type: string
+  default: current
+  values:
+  - asdsa
 
 trigger:
 - master
@@ -90,7 +96,7 @@ stages:
           
           - task: DownloadBuildArtifacts@0
             inputs:
-              buildType: 'specific'
+              buildType: ${{ parameters.build_choose }}
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.ArtifactsDirectory)'
