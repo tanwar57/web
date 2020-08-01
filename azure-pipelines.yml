@@ -41,6 +41,7 @@ parameters:
   type: string
   default: current
   values:
+  - current
   - specific
   - latest
 
