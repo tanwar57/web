@@ -12,6 +12,9 @@ parameters:
   - webapptes57-dev
   - myapptest7-dev
   - fiftechapp-dev
+  - webapptes57-dev
+  - myapptest7-dev
+  - fiftechapp-dev
 
 - name: Application in Stage
   displayName: WebApp Name For Test Environment
@@ -21,6 +24,9 @@ parameters:
   - webapptest57-test
   - myapptest27-test
   - fiftechapp-test
+  - webapptes57-dev
+  - myapptest7-dev
+  - fiftechapp-dev
 
 - name: Applications in Production
   displayName: WebApp Name For Development Environment
@@ -30,6 +36,9 @@ parameters:
   - webapptest57-prod
   - myapptest27-prod
   - fiftechapp-prod
+  - webapptes57-dev
+  - myapptest7-dev
+  - fiftechapp-dev
 trigger:
 - master
 stages:
