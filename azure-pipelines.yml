@@ -91,11 +91,6 @@ stages:
           - task: DownloadBuildArtifacts@0
             inputs:
               buildType: 'specific'
-              project: '15737d57-841c-4925-805a-ffeaba2006cc'
-              pipeline: '1'
-              specificBuildWithTriggering: true
-              buildVersionToDownload: 'specific'
-              buildId: '17'
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.ArtifactsDirectory)'
