@@ -36,16 +36,6 @@ parameters:
   - fiftechapp-prod
   - myapptestprod27-prod
   - fiftechappproduction-prod
-- name: build_choose
-  displayName: Choose Specific build
-  type: string
-  default: current
-  values:
-  - current
-  - specific
-  - latest
-  - abcd
-  - defgh
 
 trigger:
 - master
@@ -100,10 +90,11 @@ stages:
           
           - task: DownloadBuildArtifacts@0
             inputs:
-              buildType: ${{ parameters.build_choose }}
+              buildType: 'specific'
               downloadType: 'single'
               artifactName: 'drop'
               downloadPath: '$(System.ArtifactsDirectory)'
+
 
 
 - stage: Staging_Environment
