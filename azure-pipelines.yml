@@ -7,6 +7,7 @@ parameters:
 - name: Application in Development
   displayName: WebApp Name For Development Environment
   type: string
+  default: 
   values:
   - webapptes57-dev
   - myapptest7-dev
@@ -15,6 +16,7 @@ parameters:
 - name: Application in Stage
   displayName: WebApp Name For Test Environment
   type: string
+  default:
   values:
   - webapptest57-test
   - myapptest27-test
@@ -23,6 +25,7 @@ parameters:
 - name: Applications in Production
   displayName: WebApp Name For Development Environment
   type: string
+  default:
   values:
   - webapptest57-prod
   - myapptest27-prod
