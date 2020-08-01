@@ -39,10 +39,10 @@ parameters:
 - name: build_choose
   displayName: Choose Specific build
   type: string
-  default: current
+  default: 'current'
   values:
-  - specific
-  - latest
+  - 'specific'
+  - 'latest'
 
 trigger:
 - master
