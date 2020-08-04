@@ -118,6 +118,14 @@ stages:
               definition: '18bc63e9-78d8-4927-90b8-81bae1104ef1'
               version: '1.0.0'
               downloadPath: '$(System.ArtifactsDirectory)'
+          
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+              appType: 'webApp'
+              WebAppName: 'webapptes57-dev'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 #           - task: DownloadPipelineArtifact@2
 #             inputs:
 #               buildType: 'specific'
