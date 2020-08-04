@@ -70,11 +70,28 @@ stages:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
       
-    - task: PublishPipelineArtifact@1
+    - task: DotNetCoreCLI@2
       inputs:
-        targetPath: '$(Pipeline.Workspace)'
-        artifact: 'myartifact'
-        publishLocation: 'pipeline'
+        command: 'restore'
+        feedsToUse: 'select'
+        vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/*.csproj'
+        versioningScheme: 'off'
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+    
+    
+    # - task: PublishPipelineArtifact@1
+    #   inputs:
+    #     targetPath: '$(Pipeline.Workspace)'
+    #     artifact: 'myartifact'
+    #     publishLocation: 'pipeline'
     
     # - task: PublishBuildArtifacts@1
     #   inputs:
