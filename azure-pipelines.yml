@@ -71,12 +71,12 @@ stages:
         packagesToPack: '**/*.csproj'
         versioningScheme: 'off'
     
-    - task: NuGetCommand@2
-      inputs:
-        command: 'push'
-        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-        nuGetFeedType: 'internal'
-        publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/f373826e-2f7f-467d-95f0-86eabaaa5220'
+    # - task: NuGetCommand@2
+    #   inputs:
+    #     command: 'push'
+    #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    #     nuGetFeedType: 'internal'
+    #     publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/f373826e-2f7f-467d-95f0-86eabaaa5220'
     
     # - task: PublishPipelineArtifact@1
     #   inputs:
