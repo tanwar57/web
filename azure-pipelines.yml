@@ -72,19 +72,20 @@ stages:
       
     - task: DotNetCoreCLI@2
       inputs:
-        command: 'restore'
-        feedsToUse: 'select'
-        vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
+        command: 'build'
+        projects: '**/*.csproj'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'pack'
         packagesToPack: '**/*.csproj'
         versioningScheme: 'off'
-    
-    - task: DotNetCoreCLI@2
+
+    - task: NuGetCommand@2
       inputs:
-        command: 'publish'
-        publishWebProjects: true
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
     
     
     # - task: PublishPipelineArtifact@1
