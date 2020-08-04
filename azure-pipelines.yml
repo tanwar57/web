@@ -69,99 +69,107 @@ stages:
       inputs:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+      
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)'
-        artifact: 'drop'
+        artifact: 'myartifact'
         publishLocation: 'pipeline'
+    
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    #     ArtifactName: 'drop'
+    #     publishLocation: 'Container'
+    # - task: PublishPipelineArtifact@1
+    #   inputs:
+    #     targetPath: '$(Pipeline.Workspace)'
+    #     artifact: 'drop'
+    #     publishLocation: 'pipeline'
+    
 
     
-- stage: Development_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
-  jobs:
-  - deployment: Deploy_to_Dev
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'dev'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'specific'
-              project: '15737d57-841c-4925-805a-ffeaba2006cc'
-              definition: '1'
-              buildVersionToDownload: 'latest'
-              artifactName: 'drop'
-              targetPath: '$(Pipeline.Workspace)'
+# - stage: Development_Environment
+#   dependsOn: Build
+#   condition: succeeded('Build')
+#   jobs:
+#   - deployment: Deploy_to_Dev
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'dev'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: DownloadPipelineArtifact@2
+#             inputs:
+#               buildType: 'specific'
+#               project: '15737d57-841c-4925-805a-ffeaba2006cc'
+#               definition: '1'
+#               buildVersionToDownload: 'latest'
+#               artifactName: 'drop'
+#               targetPath: '$(Pipeline.Workspace)'
           
           
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_in_dev }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.app_in_dev }}
+#               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
 
 
 
-- stage: Staging_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'test'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'drop'
-              downloadPath: '$(System.ArtifactsDirectory)'
+# - stage: Staging_Environment
+#   dependsOn: Build
+#   condition: succeeded('Build')
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'test'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: DownloadBuildArtifacts@0
+#             inputs:
+#               buildType: 'current'
+#               downloadType: 'single'
+#               artifactName: 'drop'
+#               downloadPath: '$(System.ArtifactsDirectory)'
 
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.apps_in_test }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.apps_in_test }}
+#               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
             
-- stage: Production_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'prod'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'drop'
-              downloadPath: '$(System.ArtifactsDirectory)'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.apps_in_prod }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+# - stage: Production_Environment
+#   dependsOn: Build
+#   condition: succeeded('Build')
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'prod'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: DownloadBuildArtifacts@0
+#             inputs:
+#               buildType: 'current'
+#               downloadType: 'single'
+#               artifactName: 'drop'
+#               downloadPath: '$(System.ArtifactsDirectory)'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.apps_in_prod }}
+#               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
