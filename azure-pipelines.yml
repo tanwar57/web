@@ -73,11 +73,11 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'build'
-        projects: '**/*.csproj'
+        projects: '**/*.sln'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'pack'
-        packagesToPack: '**/*.csproj'
+        packagesToPack: '**/*.sln'
         versioningScheme: 'off'
 
     - task: NuGetCommand@2
@@ -93,6 +93,7 @@ stages:
     #     targetPath: '$(Pipeline.Workspace)'
     #     artifact: 'myartifact'
     #     publishLocation: 'pipeline'
+
     
     # - task: PublishBuildArtifacts@1
     #   inputs:
