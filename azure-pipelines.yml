@@ -108,34 +108,34 @@ stages:
 
     
 #- stage: Development_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
-  jobs:
-  - deployment: Deploy_to_Dev
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'dev'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadPackage@1
-            inputs:
-              packageType: 'nuget'
-              feed: '15737d57-841c-4925-805a-ffeaba2006cc/f373826e-2f7f-467d-95f0-86eabaaa5220'
-              view: '14064c06-7518-4555-b503-d9a20d19b505'
-              definition: '18bc63e9-78d8-4927-90b8-81bae1104ef1'
-              version: '1.0.0'
-              downloadPath: '$(System.ArtifactsDirectory)'
+  # dependsOn: Build
+  # condition: succeeded('Build')
+  # jobs:
+  # - deployment: Deploy_to_Dev
+  #   pool:
+  #     vmImage: 'windows-latest'
+  #   environment: 'dev'
+  #   strategy:
+  #     runOnce:
+  #       deploy:
+  #         steps:
+  #         - task: DownloadPackage@1
+  #           inputs:
+  #             packageType: 'nuget'
+  #             feed: '15737d57-841c-4925-805a-ffeaba2006cc/f373826e-2f7f-467d-95f0-86eabaaa5220'
+  #             view: '14064c06-7518-4555-b503-d9a20d19b505'
+  #             definition: '18bc63e9-78d8-4927-90b8-81bae1104ef1'
+  #             version: '1.0.0'
+  #             downloadPath: '$(System.ArtifactsDirectory)'
 
           
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: 'webapptes57-dev'
-              packageForLinux: '$(System.ArtifactsDirectory)/**/*.nupkg'
+  #         - task: AzureRmWebAppDeployment@4
+  #           inputs:
+  #             ConnectionType: 'AzureRM'
+  #             azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+  #             appType: 'webApp'
+  #             WebAppName: 'webapptes57-dev'
+  #             packageForLinux: '$(System.ArtifactsDirectory)/**/*.nupkg'
 #           - task: DownloadPipelineArtifact@2
 #             inputs:
 #               buildType: 'specific'
