@@ -36,6 +36,9 @@ parameters:
   - myapptestprod27-prod
   - fiftechappproduction-prod
 
+- name: choose_version
+  displayName: Type Artifact Version
+
 trigger:
 - none
 
@@ -58,7 +61,7 @@ stages:
               feedsToUse: 'internal'
               vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
               vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
-              vstsPackageVersion: 'current'
+              vstsPackageVersion: ${{ parameters.choose_version }}
           # - task: AzureRmWebAppDeployment@4
           #   inputs:
           #     ConnectionType: 'AzureRM'
