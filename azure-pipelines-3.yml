@@ -7,7 +7,7 @@ parameters:
     displayName: choose version to display
     type: string
     values:
-    - ${{ variables.version }}
+    - $(variables.version)
 
 trigger:
 - master
