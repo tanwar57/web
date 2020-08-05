@@ -50,8 +50,6 @@ trigger:
 
 stages:
 - stage: Development_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
   jobs:
   - deployment: Deploy_to_Dev
     pool:
@@ -78,8 +76,6 @@ stages:
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 - stage: Staging_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
   jobs:
   - deployment: Deploy
     pool:
@@ -108,8 +104,6 @@ stages:
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
             
 - stage: Production_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
   jobs:
   - deployment: Deploy
     pool:
