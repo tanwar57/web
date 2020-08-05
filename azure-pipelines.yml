@@ -79,7 +79,7 @@ stages:
         vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/191a04ab-de3d-4d50-b667-a0cc7aa5d64d'
         vstsFeedPackagePublish: 'artiazure'
         versionOption: 'custom'
-        versionPublish: '1.0.0'
+        versionPublish: '1.0.1'
     # - task: NuGetCommand@2
     #   inputs:
     #     command: 'push'
