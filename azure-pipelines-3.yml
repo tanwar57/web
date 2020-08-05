@@ -5,10 +5,6 @@
 parameters:
   - name: choose_version
     displayName: type version no
-    values:
-    - 
-    - 
-    - 
 
 
 trigger:
