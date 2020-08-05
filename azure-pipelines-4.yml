@@ -58,14 +58,14 @@ stages:
               feedsToUse: 'internal'
               vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
               vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
-              vstsPackageVersion: 'latest'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_in_dev }}
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              vstsPackageVersion: 'current'
+          # - task: AzureRmWebAppDeployment@4
+          #   inputs:
+          #     ConnectionType: 'AzureRM'
+          #     azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+          #     appType: 'webApp'
+          #     WebAppName: ${{ parameters.app_in_dev }}
+          #     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 # - stage: Staging_Environment
 #   dependsOn: []
