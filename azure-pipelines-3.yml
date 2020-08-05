@@ -4,10 +4,12 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 parameters:
   - name: choose_version
-    displayName: choose version to display
-    type: string
+    displayName: type version no
     values:
-    - $(variables.version)
+    - 
+    - 
+    - 
+
 
 trigger:
 - master
@@ -19,9 +21,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  version: 
-  value: input
-
+  Version: 1.1.0 
 
 steps:
 - task: NuGetToolInstaller@1
@@ -58,6 +58,6 @@ steps:
     vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
     vstsFeedPackagePublish: 'build-release'
     versionOption: 'custom'
-    versionPublish: $(version)
+    versionPublish: ${{ parameters.choose_version }}
 
 
