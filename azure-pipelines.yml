@@ -64,12 +64,6 @@ stages:
         msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-
-    # - task: NuGetCommand@2
-    #   inputs:
-    #     command: 'pack'
-    #     packagesToPack: '**/*.csproj'
-    #     versioningScheme: 'off'
     
     - task: UniversalPackages@0
       inputs:
@@ -80,79 +74,45 @@ stages:
         vstsFeedPackagePublish: 'artiazure'
         versionOption: 'custom'
         versionPublish: '1.0.1'
-    # - task: NuGetCommand@2
-    #   inputs:
-    #     command: 'push'
-    #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    #     nuGetFeedType: 'internal'
-    #     publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/f373826e-2f7f-467d-95f0-86eabaaa5220'
-    
-    # - task: PublishPipelineArtifact@1
-    #   inputs:
-    #     targetPath: '$(Pipeline.Workspace)'
-    #     artifact: 'myartifact'
-    #     publishLocation: 'pipeline'
 
-    
-    # - task: PublishBuildArtifacts@1
-    #   inputs:
-    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    #     ArtifactName: 'drop'
-    #     publishLocation: 'Container'
-    # - task: PublishPipelineArtifact@1
-    #   inputs:
-    #     targetPath: '$(Pipeline.Workspace)'
-    #     artifact: 'drop'
-    #     publishLocation: 'pipeline'
     
 
     
-#- stage: Development_Environment
-  # dependsOn: Build
-  # condition: succeeded('Build')
-  # jobs:
-  # - deployment: Deploy_to_Dev
-  #   pool:
-  #     vmImage: 'windows-latest'
-  #   environment: 'dev'
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: DownloadPackage@1
-  #           inputs:
-  #             packageType: 'nuget'
-  #             feed: '15737d57-841c-4925-805a-ffeaba2006cc/f373826e-2f7f-467d-95f0-86eabaaa5220'
-  #             view: '14064c06-7518-4555-b503-d9a20d19b505'
-  #             definition: '18bc63e9-78d8-4927-90b8-81bae1104ef1'
-  #             version: '1.0.0'
-  #             downloadPath: '$(System.ArtifactsDirectory)'
+- stage: Development_Environment
+  dependsOn: Build
+  condition: succeeded('Build')
+  jobs:
+  - deployment: Deploy_to_Dev
+    pool:
+      vmImage: 'windows-latest'
+    environment: 'dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: UniversalPackages@0
+            inputs:
+              command: 'download'
+              downloadDirectory: '$(System.DefaultWorkingDirectory)'
+              feedsToUse: 'internal'
+              vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/191a04ab-de3d-4d50-b667-a0cc7aa5d64d'
+              vstsFeedPackage: 'c9b3f6f9-ea8a-4b5a-a228-50f7d741f0b7'
+              vstsPackageVersion: '1.0.1'
+            
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+              appType: 'webApp'
+              WebAppName: 'webapptes57-dev'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
           
-  #         - task: AzureRmWebAppDeployment@4
-  #           inputs:
-  #             ConnectionType: 'AzureRM'
-  #             azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-  #             appType: 'webApp'
-  #             WebAppName: 'webapptes57-dev'
-  #             packageForLinux: '$(System.ArtifactsDirectory)/**/*.nupkg'
-#           - task: DownloadPipelineArtifact@2
-#             inputs:
-#               buildType: 'specific'
-#               project: '15737d57-841c-4925-805a-ffeaba2006cc'
-#               definition: '1'
-#               buildVersionToDownload: 'latest'
-#               artifactName: 'drop'
-#               targetPath: '$(Pipeline.Workspace)'
+         
+         
           
           
-#           - task: AzureRmWebAppDeployment@4
-#             inputs:
-#               ConnectionType: 'AzureRM'
-#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-#               appType: 'webApp'
-#               WebAppName: ${{ parameters.app_in_dev }}
-#               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+    
 
 
 
