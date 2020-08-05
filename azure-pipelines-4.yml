@@ -50,6 +50,7 @@ trigger:
 
 stages:
 - stage: Development_Environment
+  dependsOn: []
   jobs:
   - deployment: Deploy_to_Dev
     pool:
@@ -76,7 +77,9 @@ stages:
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 - stage: Staging_Environment
+  dependsOn: []
   jobs:
+  
   - deployment: Deploy
     pool:
       vmImage: 'windows-latest'
@@ -104,6 +107,7 @@ stages:
               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
             
 - stage: Production_Environment
+  dependsOn: []
   jobs:
   - deployment: Deploy
     pool:
