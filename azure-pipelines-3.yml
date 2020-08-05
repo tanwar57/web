@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  version: value
 
 steps:
 - task: NuGetToolInstaller@1
@@ -32,3 +33,15 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
+    vstsFeedPackagePublish: 'build-release'
+    versionOption: 'custom'
+    versionPublish: '$(version)'
+
+
