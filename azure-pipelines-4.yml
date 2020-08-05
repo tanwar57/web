@@ -2,6 +2,40 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+parameters:
+- name: app_in_dev
+  displayName: Application in Development Environment
+  type: string
+  default: 
+  values:
+  - webapptes57-dev
+  - myapptest7-dev
+  - fiftechapp-dev
+  - myapplicatointest7-dev
+  - fiftechappreact-dev
+
+- name: apps_in_test
+  displayName: Application in Test Environment
+  type: string
+  default:
+  values:
+  - webapptest57-test
+  - myapptest27-test
+  - fiftechapp-test
+  - myappteststage27-test
+  - fiftechappstage-test
+
+- name: apps_in_prod
+  displayName: Application in Production Environment
+  type: string
+  default:
+  values:
+  - webapptest57-prod
+  - myapptest27-prod
+  - fiftechapp-prod
+  - myapptestprod27-prod
+  - fiftechappproduction-prod
+
 
 stages:
 - stage: Development_Environment
@@ -22,47 +56,55 @@ pool:
               downloadDirectory: '$(System.DefaultWorkingDirectory)'
               feedsToUse: 'internal'
               vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
-
-- stage: Staging_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'test'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          
-
+              vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
+              vstsPackageVersion: '0.0.1'
           - task: AzureRmWebAppDeployment@4
             inputs:
               ConnectionType: 'AzureRM'
               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
               appType: 'webApp'
-              WebAppName: ${{ parameters.apps_in_test }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+              WebAppName: 'webapptes57-dev'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+# - stage: Staging_Environment
+#   dependsOn: Build
+#   condition: succeeded('Build')
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'test'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+          
+
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.apps_in_test }}
+#               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
             
-- stage: Production_Environment
-  dependsOn: Build
-  condition: succeeded('Build')
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'prod'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
+# - stage: Production_Environment
+#   dependsOn: Build
+#   condition: succeeded('Build')
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'prod'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
           
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.apps_in_prod }}
-              packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.apps_in_prod }}
+#               packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
   
