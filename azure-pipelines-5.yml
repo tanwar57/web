@@ -16,31 +16,32 @@ stages:
       displayName: BuildNugetPackage
       variables:
         BuildConfiguration: release
-        steps:
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'restore'
-            projects: '**/*.csproj'
-            feedsToUse: 'select'
+      steps:
+       
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'restore'
+          projects: '**/*.csproj'
+          feedsToUse: 'select'
 
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'build'
-            projects: '**/*.csproj'
-            arguments: '--configuration $(BuildConfiguration)'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: '**/*.csproj'
+          arguments: '--configuration $(BuildConfiguration)'
 
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'pack'
-            packagesToPack: '**/*.csproj'
-            versioningScheme: 'byPrereleaseNumber'
-            majorVersion: '1'
-            minorVersion: '1'
-            patchVersion: '0'
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'push'
-            packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-            nuGetFeedType: 'internal'
-            publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'pack'
+          packagesToPack: '**/*.csproj'
+          versioningScheme: 'byPrereleaseNumber'
+          majorVersion: '1'
+          minorVersion: '1'
+          patchVersion: '0'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+          nuGetFeedType: 'internal'
+          publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
         
