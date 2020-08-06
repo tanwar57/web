@@ -55,4 +55,4 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
