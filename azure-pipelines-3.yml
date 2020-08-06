@@ -47,14 +47,22 @@ steps:
 #     vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
 #     vstsFeedPackagePublish: 'build-release'
 #     versionOption: 'patch'
-- task: UniversalPackages@0
+# - task: UniversalPackages@0
+#   inputs:
+#     command: 'publish'
+#     publishDirectory: '$(Build.ArtifactStagingDirectory)'
+#     feedsToUsePublish: 'internal'
+#     vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
+#     vstsFeedPackagePublish: 'build-release'
+#     versionOption: 'custom'
+#     versionPublish: ${{ parameters.choose_version }}
+
+
+- task: NuGetCommand@2
   inputs:
-    command: 'publish'
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    feedsToUsePublish: 'internal'
-    vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
-    vstsFeedPackagePublish: 'build-release'
-    versionOption: 'custom'
-    versionPublish: ${{ parameters.choose_version }}
-
-
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '1'
+    minorVersion: '1'
+    patchVersion: '0'
