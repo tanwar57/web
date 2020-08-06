@@ -58,6 +58,14 @@ steps:
 #     versionPublish: ${{ parameters.choose_version }}
 
 
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
+
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
@@ -66,3 +74,9 @@ steps:
     majorVersion: '1'
     minorVersion: '1'
     patchVersion: '0'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
