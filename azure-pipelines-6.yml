@@ -33,10 +33,11 @@ steps:
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
   inputs:
-    command: 'restore'
-    projects: '**/*.sln'
-    feedsToUse: 'select'
+    command: restore
+    projects: '**/*.csproj'
+
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -56,8 +57,11 @@ steps:
     publishWebProjects: true
     nuGetFeedType: 'internal'
     publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
-
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet push'
   inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*'
+    command: push
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    publishVstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/14cbebed-79a6-42b5-939b-8ecd9f8d85b5'
+
+
