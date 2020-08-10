@@ -5,6 +5,8 @@
 parameters:
   - name: my_app
     displayName: choose_app
+    type: string
+    default:
     values:
     - myapp57
     - dot-net-test-123
