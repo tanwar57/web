@@ -3,39 +3,39 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-parameters:
-- name: app_in_dev
-  displayName: Application in Development Environment
-  type: string
-  default: 
-  values:
-  - webapptes57-dev
-  - myapptest7-dev
-  - fiftechapp-dev
-  - myapplicatointest7-dev
-  - fiftechappreact-dev
+# parameters:
+# - name: app_in_dev
+#   displayName: Application in Development Environment
+#   type: string
+#   default: 
+#   values:
+#   - webapptes57-dev
+#   - myapptest7-dev
+#   - fiftechapp-dev
+#   - myapplicatointest7-dev
+#   - fiftechappreact-dev
 
-- name: apps_in_test
-  displayName: Application in Test Environment
-  type: string
-  default:
-  values:
-  - webapptest57-test
-  - myapptest27-test
-  - fiftechapp-test
-  - myappteststage27-test
-  - fiftechappstage-test
+# - name: apps_in_test
+#   displayName: Application in Test Environment
+#   type: string
+#   default:
+#   values:
+#   - webapptest57-test
+#   - myapptest27-test
+#   - fiftechapp-test
+#   - myappteststage27-test
+#   - fiftechappstage-test
 
-- name: apps_in_prod
-  displayName: Application in Production Environment
-  type: string
-  default:
-  values:
-  - webapptest57-prod
-  - myapptest27-prod
-  - fiftechapp-prod
-  - myapptestprod27-prod
-  - fiftechappproduction-prod
+# - name: apps_in_prod
+#   displayName: Application in Production Environment
+#   type: string
+#   default:
+#   values:
+#   - webapptest57-prod
+#   - myapptest27-prod
+#   - fiftechapp-prod
+#   - myapptestprod27-prod
+#   - fiftechappproduction-prod
 
 trigger:
 - master
@@ -64,15 +64,30 @@ stages:
         msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
-    - task: UniversalPackages@0
+    - task: DotNetCoreCLI@2
       inputs:
         command: 'publish'
-        publishDirectory: '$(Build.ArtifactStagingDirectory)'
-        feedsToUsePublish: 'internal'
-        vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/191a04ab-de3d-4d50-b667-a0cc7aa5d64d'
-        vstsFeedPackagePublish: 'artiazure'
-        versionOption: 'patch'
-    
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(System.DefaultWorkingDirectory)/PublishedWebApp'
+        zipAfterPublish: false
+    # - task: UniversalPackages@0
+    #   inputs:
+    #     command: 'publish'
+    #     publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    #     feedsToUsePublish: 'internal'
+    #     vstsFeedPublish: '15737d57-841c-4925-805a-ffeaba2006cc/191a04ab-de3d-4d50-b667-a0cc7aa5d64d'
+    #     vstsFeedPackagePublish: 'artiazure'
+    #     versionOption: 'patch'
+    - task: Docker@1
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscriptionEndpoint: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+        azureContainerRegistry: 'dockerres.azurecr.io'
+        command: 'Build an image'
+        imageName: '$(Build.Repository.Name):$(Build.BuildId)'
+        useDefaultContext: false
+        buildContext: '$(System.DefaultWorkingDirectory)/PublishedWebApp'
+
     # - task: UniversalPackages@0
     #   inputs:
     #     command: 'publish'
