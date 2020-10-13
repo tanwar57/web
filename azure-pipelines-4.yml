@@ -42,88 +42,88 @@ parameters:
 trigger:
 - none
 
-stages:
-- stage: Development_Environment
-  dependsOn: []
-  jobs:
-  - deployment: Deploy_to_Dev
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'dev'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: UniversalPackages@0
-            inputs:
-              command: 'download'
-              downloadDirectory: '$(System.DefaultWorkingDirectory)'
-              feedsToUse: 'internal'
-              vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
-              vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
-              vstsPackageVersion: ${{ parameters.choose_version }}
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_in_dev }}
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+# stages:
+# - stage: Development_Environment
+#   dependsOn: []
+#   jobs:
+#   - deployment: Deploy_to_Dev
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'dev'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: UniversalPackages@0
+#             inputs:
+#               command: 'download'
+#               downloadDirectory: '$(System.DefaultWorkingDirectory)'
+#               feedsToUse: 'internal'
+#               vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
+#               vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
+#               vstsPackageVersion: ${{ parameters.choose_version }}
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.app_in_dev }}
+#               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
-- stage: Staging_Environment
-  dependsOn: []
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'test'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
+# - stage: Staging_Environment
+#   dependsOn: []
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'test'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
           
 
-          - task: UniversalPackages@0
-            inputs:
-              command: 'download'
-              downloadDirectory: '$(System.DefaultWorkingDirectory)'
-              feedsToUse: 'internal'
-              vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
-              vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
-              vstsPackageVersion: 'latest'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_in_dev }}
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+#           - task: UniversalPackages@0
+#             inputs:
+#               command: 'download'
+#               downloadDirectory: '$(System.DefaultWorkingDirectory)'
+#               feedsToUse: 'internal'
+#               vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
+#               vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
+#               vstsPackageVersion: 'latest'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.app_in_dev }}
+#               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
             
-- stage: Production_Environment
-  dependsOn: []
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'windows-latest'
-    environment: 'prod'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
+# - stage: Production_Environment
+#   dependsOn: []
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'windows-latest'
+#     environment: 'prod'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
           
-          - task: UniversalPackages@0
-            inputs:
-              command: 'download'
-              downloadDirectory: '$(System.DefaultWorkingDirectory)'
-              feedsToUse: 'internal'
-              vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
-              vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
-              vstsPackageVersion: 'latest'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
-              appType: 'webApp'
-              WebAppName: ${{ parameters.app_in_dev }}
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+#           - task: UniversalPackages@0
+#             inputs:
+#               command: 'download'
+#               downloadDirectory: '$(System.DefaultWorkingDirectory)'
+#               feedsToUse: 'internal'
+#               vstsFeed: '15737d57-841c-4925-805a-ffeaba2006cc/0ab6ee12-0723-40d4-8936-22e85d9e4f0e'
+#               vstsFeedPackage: 'f18d396c-c74e-4af0-a089-840d177cec07'
+#               vstsPackageVersion: 'latest'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'Microsoft Partner Network (e189eff3-24f5-4964-87fc-1474f1735e7e)'
+#               appType: 'webApp'
+#               WebAppName: ${{ parameters.app_in_dev }}
+#               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
   
